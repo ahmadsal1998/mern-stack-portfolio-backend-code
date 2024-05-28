@@ -12,28 +12,28 @@ export const register = catchAsyncErrors(async (req, res, next) => {
   }
   const { avatar, resume } = req.files;
 
-  //POSTING AVATAR
-  const cloudinaryResponse = await cloudinary.uploader.upload(
+   //POSTING AVATAR
+  const cloudinaryResponseForAvatar = await cloudinary.uploader.upload(
     avatar.tempFilePath,
     { folder: "PORTFOLIO AVATAR" }
   );
-  if (!cloudinaryResponse || cloudinaryResponse.error) {
+  if (!cloudinaryResponseForAvatar || cloudinaryResponseForAvatar.error) {
     console.error(
       "Cloudinary Error:",
-      cloudinaryResponse.error || "Unknown Cloudinary error"
+      cloudinaryResponseForAvatar.error || "Unknown Cloudinary error"
     );
     return next(new ErrorHandler("Failed to upload avatar to Cloudinary", 500));
   }
 
   //POSTING RESUME
-  const cloudinaryResponse = await cloudinary.uploader.upload(
+  const cloudinaryResponseForResume = await cloudinary.uploader.upload(
     resume.tempFilePath,
     { folder: "PORTFOLIO RESUME" }
   );
-  if (!cloudinaryResponse || cloudinaryResponse.error) {
+  if (!cloudinaryResponseForResume || cloudinaryResponseForResume.error) {
     console.error(
       "Cloudinary Error:",
-      cloudinaryResponse.error || "Unknown Cloudinary error"
+      cloudinaryResponseForResume.error || "Unknown Cloudinary error"
     );
     return next(new ErrorHandler("Failed to upload resume to Cloudinary", 500));
   }
