@@ -17,7 +17,7 @@ dotenv.config({ path: "./config/config.env" });
 
 app.use(
   cors({
-    origin: ['https://ahmad-salame-portfolio.netlify.app', 'https://my-portfolioo-dashboard.netlify.app'],
+    origin: [process.env.PORTFOLIO_URL, process.env.DASHBOARD_URL],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
