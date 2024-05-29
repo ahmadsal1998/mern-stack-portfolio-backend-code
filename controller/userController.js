@@ -12,7 +12,7 @@ export const register = catchAsyncErrors(async (req, res, next) => {
   }
   const { avatar, resume } = req.files;
 
-   //POSTING AVATAR
+  //POSTING AVATAR
   const cloudinaryResponseForAvatar = await cloudinary.uploader.upload(
     avatar.tempFilePath,
     { folder: "PORTFOLIO AVATAR" }
@@ -63,12 +63,12 @@ export const register = catchAsyncErrors(async (req, res, next) => {
     facebookURL,
     linkedInURL,
     avatar: {
-      public_id: cloudinaryResponseForAvatar.public_id, // Set your cloudinary public_id here
-      url: cloudinaryResponseForAvatar.secure_url, // Set your cloudinary secure_url here
+      public_id: cloudinaryResponse.public_id, // Set your cloudinary public_id here
+      url: cloudinaryResponse.secure_url, // Set your cloudinary secure_url here
     },
     resume: {
-      public_id: cloudinaryResponseForResume.public_id, // Set your cloudinary public_id here
-      url: cloudinaryResponseForResume.secure_url, // Set your cloudinary secure_url here
+      public_id: cloudinaryResponse.public_id, // Set your cloudinary public_id here
+      url: cloudinaryResponse.secure_url, // Set your cloudinary secure_url here
     },
   });
   generateToken(user, "Registered!", 201, res);
@@ -96,8 +96,8 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
     .cookie("token", "", {
       httpOnly: true,
       expires: new Date(Date.now()),
-      sameSite: "None",
-      secure: true,
+      secure: true, // Only use secure cookies in production
+      sameSite: 'None', // Adjust as needed (e.g., 'Strict', 'Lax', 'None')
     })
     .json({
       success: true,
@@ -195,7 +195,7 @@ export const updatePassword = catchAsyncErrors(async (req, res, next) => {
 });
 
 export const getUserForPortfolio = catchAsyncErrors(async (req, res, next) => {
-  const id = "6653e3d775000f075308715f";
+  const id = "663296a896e553748ab5b0be";
   const user = await User.findById(id);
   res.status(200).json({
     success: true,
